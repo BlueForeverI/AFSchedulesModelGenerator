@@ -42,7 +42,7 @@ namespace AFSchedulesModelGenerator.Models
             if (Value.StartsWith(" -"))
             {
                 string negatedValue = Value.Replace(" -", String.Empty);
-                return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return (-_fsbData.{1}).ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
+                return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return (-_fsbData.Investments.{1}).ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
                 PropertyName, negatedValue);
             }
 
@@ -52,7 +52,7 @@ namespace AFSchedulesModelGenerator.Models
                 PropertyName, Value);
             }
 
-            return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return _fsbData.{1}.ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
+            return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return _fsbData.Investments.{1}.ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
                 PropertyName, Value);
         }
 

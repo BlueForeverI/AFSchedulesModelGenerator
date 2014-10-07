@@ -38,6 +38,11 @@ namespace AFSchedulesModelGenerator.Helpers
         {
             if (values.Length == 3)
             {
+                if (isRepeater)
+                {
+                    xmlClass.IsRepeatable = true;
+                }
+
                 if (xmlClass.Properties == null)
                 {
                     xmlClass.Properties = new List<XmlProperty>();

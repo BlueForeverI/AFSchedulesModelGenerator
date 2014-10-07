@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using AFSchedulesModelGenerator.Helpers;
+using System.Text.RegularExpressions;
 
 namespace AFSchedulesModelGenerator.Models
 {
     public class XmlClass
     {
         public string ClassName { get; set; }
+        public bool IsRepeatable { get; set; }
 
         public List<XmlProperty> Properties { get; set; }
 
@@ -46,6 +49,14 @@ namespace AFSchedulesModelGenerator.Models
 
             builder.Append("private FSBDigitalSubmissionsData _fsbData;\r\n");
 
+            if (IsRepeatable)
+            {
+                var dataItemName = Properties.FirstOrDefault(p => p.IsRepeater).Value;
+                var lastMatch = Regex.Match(dataItemName, "[A-Z][a-z0-9]+$", RegexOptions.RightToLeft).Value;
+                dataItemName = dataItemName.Substring(0, dataItemName.Length - lastMatch.Length);
+                builder.Append(string.Format("private {0}Data _item;\r\n", dataItemName));
+            }
+
             builder.AppendFormat("\r\n#region Constructors\r\n");
 
             builder.Append(string.Format("public {0}()\r\n{{\r\n", ClassName));
@@ -60,9 +71,38 @@ namespace AFSchedulesModelGenerator.Models
             {
                 if (property.IsClass)
                 {
-                    builder.Append(string.Format("\r\nprivate {0} {1}Field;\r\npublic {0} {1} \r\n{{\r\n get \r\n{{\r\n return new {0}(_fsbData); \r\n}}\r\n set\r\n{{\r\n{1}Field = value;\r\n}} \r\n}}\r\n",
-                        ClassName + property.PropertyName.FirstCharToUpper(),
-                        property.PropertyName));
+                    string fullClassName = ClassName + property.PropertyName.FirstCharToUpper();
+                    if (Classes.ContainsKey(fullClassName))
+                    {
+                        var propAsClass = Classes[fullClassName];
+                        if (propAsClass.IsRepeatable)
+                        {
+
+                            builder.Append(string.Format("\r\nprivate {0} {1}Field;\r\n[System.Xml.Serialization.XmlElement(\"{1}\")]\r\npublic List<{0}> {1}s \r\n{{\r\n get \r\n{{\r\n ",
+                                fullClassName,
+                                property.PropertyName));
+
+                            var dataListValue = propAsClass.Properties.FirstOrDefault(p => p.IsRepeater).Value;
+                            var lastMatch = Regex.Match(dataListValue, "[A-Z][a-z0-9]+$", RegexOptions.RightToLeft).Value;
+                            dataListValue = dataListValue.Substring(0, dataListValue.Length - lastMatch.Length);
+
+                            builder.AppendFormat("return _fsbData.Investments.{0}DataList\r\n.Select(item =>\r\n new {1}(item))\r\n.ToList(); \r\n}}\r\n", dataListValue, fullClassName);
+
+                            builder.AppendFormat(" set\r\n{{\r\n{1}Field = value;\r\n}} \r\n}}\r\n", fullClassName, property.PropertyName);
+                        }
+                        else
+                        {
+                            builder.Append(string.Format("\r\nprivate {0} {1}Field;\r\npublic {0} {1} \r\n{{\r\n get \r\n{{\r\n return new {0}(_fsbData); \r\n}}\r\n set\r\n{{\r\n{1}Field = value;\r\n}} \r\n}}\r\n",
+                                ClassName + property.PropertyName.FirstCharToUpper(),
+                                property.PropertyName));
+                        }
+                    }
+                    else
+                    {
+                        builder.Append(string.Format("\r\nprivate {0} {1}Field;\r\npublic {0} {1} \r\n{{\r\n get \r\n{{\r\n return new {0}(_fsbData); \r\n}}\r\n set\r\n{{\r\n{1}Field = value;\r\n}} \r\n}}\r\n",
+                            ClassName + property.PropertyName.FirstCharToUpper(),
+                            property.PropertyName));
+                    }
                 }
                 else
                 {

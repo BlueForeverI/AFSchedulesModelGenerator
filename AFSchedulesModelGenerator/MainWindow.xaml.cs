@@ -1,6 +1,7 @@
 ﻿using AFSchedulesModelGenerator.Helpers;
 using AFSchedulesModelGenerator.Models;
 using Microsoft.Win32;
+using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,10 @@ namespace AFSchedulesModelGenerator
         public MainWindow()
         {
             InitializeComponent();
+
+            textEditor.ConfigurationManager.Language = "cs";
+            textEditor.Margins[0].Width = 20;
+            textEditor.LineWrapping.Mode = LineWrappingMode.Word;
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -47,7 +52,7 @@ namespace AFSchedulesModelGenerator
             string prefix = txtPrefix.Text;
 
             string classContent = CsvReaderHelper.ConvertFileToCode(path, prefix, startIndex);
-            txtOutput.Text = classContent;
+            textEditor.Text = classContent;
         }
     }
 }
