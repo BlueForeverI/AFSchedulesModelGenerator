@@ -1,0 +1,4 @@
+AFSchedulesModelGenerator
+=========================
+
+Schedules model generator
