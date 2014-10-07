@@ -1,0 +1,13 @@
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\bin\Debug\AFSchedulesModelGenerator.exe.config
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\bin\Debug\AFSchedulesModelGenerator.exe
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\bin\Debug\AFSchedulesModelGenerator.pdb
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator.csprojResolveAssemblyReference.cache
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\MainWindow.baml
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\MainWindow.g.cs
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\App.g.cs
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator_MarkupCompile.cache
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator.g.resources
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator.Properties.Resources.resources
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator.csproj.GenerateResource.Cache
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator.exe
+c:\users\georgi.yolovski\documents\visual studio 2012\Projects\AFSchedulesModelGenerator\AFSchedulesModelGenerator\obj\Debug\AFSchedulesModelGenerator.pdb
