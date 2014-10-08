@@ -65,6 +65,16 @@ namespace AFSchedulesModelGenerator.Models
             builder.Append(string.Format("public {0}(FSBDigitalSubmissionsData fsbData)\r\n{{\r\nthis._fsbData = fsbData;", ClassName));
             builder.Append("\r\n}\r\n");
 
+            if (IsRepeatable)
+            {
+                var dataItemName = Properties.FirstOrDefault(p => p.IsRepeater).Value;
+                var lastMatch = Regex.Match(dataItemName, "[A-Z][a-z0-9]+$", RegexOptions.RightToLeft).Value;
+                dataItemName = dataItemName.Substring(0, dataItemName.Length - lastMatch.Length);
+
+                builder.Append(string.Format("public {0}({1}Data item)\r\n{{\r\nthis._item = item;", ClassName, dataItemName));
+                builder.Append("\r\n}\r\n");
+            }
+
             builder.AppendFormat("#endregion\r\n");
 
             foreach (var property in Properties)
@@ -78,7 +88,7 @@ namespace AFSchedulesModelGenerator.Models
                         if (propAsClass.IsRepeatable)
                         {
 
-                            builder.Append(string.Format("\r\nprivate {0} {1}Field;\r\n[System.Xml.Serialization.XmlElement(\"{1}\")]\r\npublic List<{0}> {1}s \r\n{{\r\n get \r\n{{\r\n ",
+                            builder.Append(string.Format("\r\nprivate List<{0}> {1}Field;\r\n[System.Xml.Serialization.XmlElement(\"{1}\")]\r\npublic List<{0}> {1}s \r\n{{\r\n get \r\n{{\r\n ",
                                 fullClassName,
                                 property.PropertyName));
 
