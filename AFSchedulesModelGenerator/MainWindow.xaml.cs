@@ -32,7 +32,7 @@ namespace AFSchedulesModelGenerator
             InitializeComponent();
 
             textEditor.ConfigurationManager.Language = "cs";
-            textEditor.Margins[0].Width = 20;
+            textEditor.Margins[0].Width = 50;
             textEditor.LineWrapping.Mode = LineWrappingMode.Word;
         }
 
@@ -50,6 +50,8 @@ namespace AFSchedulesModelGenerator
             string path = txtFilePath.Text;
             int startIndex = int.Parse(txtStartFrom.Text);
             string prefix = txtPrefix.Text;
+            XmlProperty.PropertyPrefix = txtPropertyPrefix.Text.Trim();
+            CsvReaderHelper.UseTaxonomy = radioUseTaxonomy.IsChecked ?? true;
 
             string classContent = CsvReaderHelper.ConvertFileToCode(path, prefix, startIndex);
             textEditor.Text = classContent;

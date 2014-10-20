@@ -10,6 +10,8 @@ namespace AFSchedulesModelGenerator.Helpers
 {
     public static class CsvReaderHelper
     {
+        public static bool UseTaxonomy { get; set; }
+
         public static string FirstCharToUpper(this string input)
         {
             if (String.IsNullOrEmpty(input))
@@ -21,7 +23,7 @@ namespace AFSchedulesModelGenerator.Helpers
         {
             string content = File.ReadAllText(filePath);
             string[] values = content.Split(new string[] { ",", "\r\n" }, StringSplitOptions.None);
-            int cellsPerRow = 11;
+            int cellsPerRow = 12;
             int totalRows = values.Count() / cellsPerRow;
 
             var result = new List<string[]>();
@@ -51,7 +53,7 @@ namespace AFSchedulesModelGenerator.Helpers
                 xmlClass.Properties.Add(new XmlProperty()
                 {
                     PropertyName = values[0],
-                    Value = values[1],
+                    Value = UseTaxonomy ? values[1] : values[2],              // TODO: revert back to 1, 2 is for calculations
                     IsRepeater = isRepeater
                 });
 

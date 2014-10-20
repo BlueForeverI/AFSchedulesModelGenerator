@@ -13,6 +13,8 @@ namespace AFSchedulesModelGenerator.Models
         public bool IsRepeater { get; set; }
         public bool IsClass { get; set; }
 
+        public static string PropertyPrefix { get; set; }
+
         private static System.Xml.Serialization.XmlSerializer serializer;
         private static System.Xml.Serialization.XmlSerializer Serializer
         {
@@ -39,11 +41,11 @@ namespace AFSchedulesModelGenerator.Models
                 PropertyName);
             }
 
-            if (Value.StartsWith(" -"))
+            if (Value.Contains("-"))
             {
-                string negatedValue = Value.Replace(" -", String.Empty);
-                return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return (-_fsbData.Investments.{1}).ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
-                PropertyName, negatedValue);
+                string negatedValue = Value.Replace("-", String.Empty).Replace(" ", "");
+                return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return (-_fsbData.{2}.{1}).ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
+                PropertyName, negatedValue, PropertyPrefix);
             }
 
             if (IsRepeater)
@@ -52,8 +54,8 @@ namespace AFSchedulesModelGenerator.Models
                 PropertyName, Value);
             }
 
-            return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return _fsbData.Investments.{1}.ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
-                PropertyName, Value);
+            return string.Format("\r\nprivate string {0}Field;\r\npublic string {0}\r\n{{\r\n get \r\n{{\r\n return _fsbData.{2}.{1}.ToString(); \r\n}}\r\n set\r\n{{\r\n{0}Field = value;\r\n}} \r\n}}\r\n",
+                PropertyName, Value, PropertyPrefix);
         }
 
         /// <summary>
